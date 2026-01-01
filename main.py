@@ -1,10 +1,15 @@
-def     create_grid()-> list:
+def     create_grid(exemple: bool = False)-> list:
     grid = []
-    for i in range(3):
-        row = []
-        for j in range(3):
-            row.append("[ ]")
-        grid.append(row)
+    
+    if (not exemple):
+        for i in range(3):
+            row = []
+            for j in range(3):
+                row.append("[ ]")
+            grid.append(row)
+    else:
+        grid = list(range(1, 10))
+    
     return grid
 
 def     print_grid(grid: list)-> None:
@@ -15,5 +20,6 @@ def     print_grid(grid: list)-> None:
             str += " " + elem
         print(str)
 
-test = create_grid()
-print_grid(test)
+
+test = create_grid(True)
+print(test)
