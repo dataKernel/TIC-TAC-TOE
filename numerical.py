@@ -1,3 +1,8 @@
+import      os
+##########################################################################
+def     clear_screen():
+    os.system("cls" if os.name == "nt" else "clear")
+
 def     create_grid(exemple: bool = False)-> list:
     
     if (exemple):
@@ -8,9 +13,10 @@ def     create_grid(exemple: bool = False)-> list:
     else:
         grid = []
         for i in range(9):
-            grid.append(" ")
+            grid.append(' ')
 
     return grid
+
 
 def     print_grid(grid: list)-> None:
     string = ""
@@ -26,5 +32,37 @@ def     print_grid(grid: list)-> None:
     if string:
         print(string)
 
-test = create_grid()
-print_grid(test)
+def     create_array_freeCell_indexes(grid: list)-> list:
+    arrayFreeCell = []
+
+    for index, elem in enumerate(grid):
+        if (elem == ' '):
+            arrayFreeCell.append(index)
+
+    return arrayFreeCell
+
+def     create_array_all_combis(grid: list)-> list:
+    arrayAllCombis = []
+    combi = []
+    i = 0
+
+    for index, elem in enumerate(grid):
+        if (i == 3):
+            i = 0
+            arrayAllCombis.append(combi)
+            combi = []
+        combi.append(index)
+        i += 1
+    if (combi):
+        arrayAllCombis.append(combi)
+    return arrayAllCombis
+
+def     main():
+    print("prog start...")
+    gridGame = create_grid()
+    arrayAllCombis = create_array_all_combis(gridGame)
+
+    print(f"arrayAllcombis: {arrayAllCombis}")
+##########################################################################
+if (__name__ == "__main__"):
+    main()
