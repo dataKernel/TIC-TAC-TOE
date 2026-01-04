@@ -46,15 +46,16 @@ def     create_array_all_combis(grid: list)-> list:
     combi = []
     i = 0
 
+    #row combinations
     for index, elem in enumerate(grid):
-        if (i == 3):
-            i = 0
+        combi.append(index)
+        if (i == 2):
             arrayAllCombis.append(combi)
             combi = []
-        combi.append(index)
-        i += 1
-    if (combi):
-        arrayAllCombis.append(combi)
+            i = 0
+        else:
+            i += 1
+
     return arrayAllCombis
 
 def     main():
