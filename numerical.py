@@ -55,6 +55,27 @@ def     create_array_all_combis(grid: list)-> list:
             i = 0
         else:
             i += 1
+    #column combinations
+    for i in range(3):
+        combi = []
+        index = i
+        combi.append(i)
+        for j in range(2):
+            index += 3
+            combi.append(index)
+        arrayAllCombis.append(combi)
+
+    #diagonal combinations
+    for i in range(1): #1ere iteration TEST 1st diago, a changer en range(2) pour plus tard
+        combi = []
+        if (i == 0):
+            index = 0
+            combi.append(index)
+        for j in range(2):
+            index += 3 + 1
+            combi.append(index)
+        arrayAllCombis.append(combi)
+
 
     return arrayAllCombis
 
