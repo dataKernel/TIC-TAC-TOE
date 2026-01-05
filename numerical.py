@@ -41,7 +41,7 @@ def     create_array_freeCell_indexes(grid: list)-> list:
 
     return arrayFreeCell
 
-def     create_array_all_combis(grid: list)-> list:
+def     create_array_win_combis(grid: list)-> list:
     arrayAllCombis = []
     combi = []
     i = 0
@@ -66,23 +66,29 @@ def     create_array_all_combis(grid: list)-> list:
         arrayAllCombis.append(combi)
 
     #diagonal combinations
-    for i in range(1): #1ere iteration TEST 1st diago, a changer en range(2) pour plus tard
+    for i in range(2):
         combi = []
         if (i == 0):
             index = 0
             combi.append(index)
-        for j in range(2):
-            index += 3 + 1
+            for j in range(2):
+                index += 3 + 1
+                combi.append(index)
+            arrayAllCombis.append(combi)
+        else:
+            index = 3 - 1
             combi.append(index)
-        arrayAllCombis.append(combi)
-
+            for j in range(2):
+                index += 2
+                combi.append(index)
+            arrayAllCombis.append(combi)
 
     return arrayAllCombis
 
 def     main():
     print("prog start...")
     gridGame = create_grid()
-    arrayAllCombis = create_array_all_combis(gridGame)
+    arrayAllCombis = create_array_win_combis(gridGame)
 
     print(f"arrayAllcombis: {arrayAllCombis}")
 ##########################################################################
