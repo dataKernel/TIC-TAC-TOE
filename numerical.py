@@ -113,8 +113,21 @@ def     gen_array_win_combis(grid:list, size:int)-> list:
 
     return arrayWinCombis
 
-def     check_winner(grid:list)-> bool:
-    pass
+def     check_winner(grid:list, arrayWinCombis:list, size:int)-> Tuple[bool, str]:
+    
+    for arrayCombi in arrayWinCombis:
+        count = 0
+        if (grid[arrayCombi[0]] == ' '):
+            continue
+        firstElem = grid[arrayCombi[0]]
+        for i in range(1, size):
+            if (grid[arrayCombi[i]] != firstElem):
+                break
+            elif (count == size - 1):
+                return (True, firstElem)
+            count += 1
+    return (False, '')
+        
     
 
 ##########################################################################
@@ -124,6 +137,9 @@ def     main():
     SIZE_GRID = 3
     #- - - - - - - - - - - -
     gridGame = create_grid(SIZE_GRID)
+    gridGame[6] = 'X'
+    gridGame[7] = 'X'
+    gridGame[8] = 'X'
     gridGameEx = create_grid(SIZE_GRID, True)
     
     print("sizeArrayGrid" + str(SIZE_GRID ** 2))
@@ -131,8 +147,9 @@ def     main():
     print("sizeArrayGridEx" + str(SIZE_GRID ** 2))
     print_grid(gridGameEx, SIZE_GRID)
     
-    arrayAllCombis = gen_array_win_combis(gridGame, SIZE_GRID)
-    print(f"arrayAllcombis: {arrayAllCombis}")
-
+    arrayWinCombis = gen_array_win_combis(gridGame, SIZE_GRID)
+    print(f"arrayAllcombis: {arrayWinCombis}")
+    win, player = check_winner(gridGame, arrayWinCombis, SIZE_GRID)
+    print(f"win: {win}, player: {player}")
 if (__name__ == "__main__"):
     main()
