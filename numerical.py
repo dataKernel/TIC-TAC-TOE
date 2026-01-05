@@ -41,7 +41,7 @@ def     gen_array_freeCell_indexes(grid: list)-> list:
 
     return arrayFreeCell
 
-def     gen_array_row_combis(grid: list)-> list:
+def     arrayRows_win_combis(grid: list)-> list:
     rowArray = []
     combi = []
     i = 0
@@ -63,8 +63,8 @@ def     gen_array_win_combis(grid: list)-> list:
     combi = []
     i = 0
 
-    #adding row combinations to array
-    arrayAllCombis = gen_array_row_combis(grid)
+    #adding row winning combinations to array
+    arrayAllCombis = arrayRows_win_combis(grid)
     #adding column combinations to array
     for i in range(3):
         combi = []
