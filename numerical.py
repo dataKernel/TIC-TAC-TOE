@@ -1,10 +1,11 @@
 import  os
 from    typing import Tuple
 ##########################################################################
+
 def     clear_screen():
     os.system("cls" if os.name == "nt" else "clear")
 
-def     create_grid(size: int, exemple: bool = False)-> Tuple[list, int]:
+def     create_grid(size:int, exemple:bool = False)-> list:
     sizeArrayGrid = size ** 2
 
     if (exemple):
@@ -17,15 +18,15 @@ def     create_grid(size: int, exemple: bool = False)-> Tuple[list, int]:
         for i in range(sizeArrayGrid):
             grid.append(' ')
 
-    return grid, sizeArrayGrid
+    return grid
 
 
-def     print_grid(grid: list)-> None:
+def     print_grid(grid:list, size:int)-> None:
     string = ""
     i = 0
 
     for elem in grid:
-        if (i > 2):
+        if (i == size):
             i = 0
             print(string)
             string = ""
@@ -34,7 +35,7 @@ def     print_grid(grid: list)-> None:
     if string:
         print(string)
 
-def     gen_array_freeCell_indexes(grid: list)-> list:
+def     gen_array_freeCell_indexes(grid:list)-> list:
     arrayFreeCell = []
 
     for index, elem in enumerate(grid):
@@ -43,7 +44,7 @@ def     gen_array_freeCell_indexes(grid: list)-> list:
 
     return arrayFreeCell
 
-def     gen_arrayRows_win_combi(grid: list)-> list:
+def     gen_arrayRows_win_combi(grid:list)-> list:
     rowArray = []
     combi = []
     i = 0
@@ -59,7 +60,7 @@ def     gen_arrayRows_win_combi(grid: list)-> list:
             i += 1
     return rowArray
 
-def     gen_arrayColumns_win_combi(grid: list)-> list:
+def     gen_arrayColumns_win_combi(grid:list, sizeArray:int)-> list:
     columnArray = []
     combi = []
     i = 0
@@ -75,14 +76,14 @@ def     gen_arrayColumns_win_combi(grid: list)-> list:
     
     return columnArray
 
-def     gen_arrayDiag_win_combi(grid: list)-> list:
+def     gen_arrayDiag_win_combi(grid:list)-> list:
     diagonalArray = []
     combi = []
     i = 0
 
 
 
-def     gen_array_win_combis(grid: list)-> list:
+def     gen_array_win_combis(grid:list)-> list:
     arrayAllCombis = []
     combi = []
     i = 0
@@ -111,17 +112,23 @@ def     gen_array_win_combis(grid: list)-> list:
 
     return arrayAllCombis
 
+##########################################################################
 def     main():
     print("prog start...")
-    gridGame, sizeArraygrid = create_grid(3)
-    gridGameEx, sizeArraygridEx = create_grid(3, True)
-    print("sizeArrayGrid" + str(sizeArraygrid))
-    print(gridGame)
-    print("sizeArrayGridEx" + str(sizeArraygridEx))
-    print(gridGameEx)
+    #- - - CONSTANTES - - - -
+    SIZE_GRID = 3
+    #- - - - - - - - - - - -
+    gridGame = create_grid(SIZE_GRID)
+    gridGameEx = create_grid(SIZE_GRID, True)
+    print("sizeArrayGrid" + str(SIZE_GRID ** 2))
+    print_grid(gridGame, SIZE_GRID)
+    print("sizeArrayGridEx" + str(SIZE_GRID ** 2))
+    print_grid(gridGameEx, SIZE_GRID)
     # arrayAllCombis = gen_array_win_combis(gridGame)
+    arrayFreeindex = gen_array_freeCell_indexes(gridGame)
+    print(arrayFreeindex)
 
     # print(f"arrayAllcombis: {arrayAllCombis}")
-##########################################################################
+
 if (__name__ == "__main__"):
     main()
