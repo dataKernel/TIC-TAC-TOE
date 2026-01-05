@@ -6,8 +6,12 @@ def     clear_screen():
     os.system("cls" if os.name == "nt" else "clear")
 
 def     create_grid(size:int, exemple:bool = False)-> list:
+    
+    if (size < 0 or size > 10):
+        printf("size isnt correct, prog abort..")
+        pass
+    
     sizeArrayGrid = size ** 2
-
     if (exemple):
         grid = list(range(1, sizeArrayGrid + 1))
         for i in range(sizeArrayGrid):
@@ -79,42 +83,39 @@ def     gen_arrayColumns_win_combi(grid:list, size:int)-> list:
 def     gen_arrayDiags_win_combi(grid:list, size:int)-> list:
     diagonalArray = []
     combi = []
-    i = 0
     
     for i in range(2):
         combi = []
         if (i == 0):
-            index = 0
-            combi.append(index)
-            for j in range(size - 1):
-                index += 3 + 1
-                combi.append(index)
+            for j in range(0, len(grid), size + 1):
+                combi.append(j)
             diagonalArray.append(combi)
         else:
-            index = size - 1
-            combi.append(index)
-            for j in range(2):
-                index += 2
-                combi.append(index)
+            for j in range(size - 1, size * (size - 1) + 1, size - 1):
+                combi.append(j)
             diagonalArray.append(combi)
     
     return diagonalArray
 
 
 def     gen_array_win_combis(grid:list, size:int)-> list:
-    arrayAllCombis = []
+    arrayWinCombis = []
     combi = []
     i = 0
 
     #adding row winning combinations to array
-    arrayAllCombis = gen_arrayRows_win_combi(grid, size)
+    arrayWinCombis = gen_arrayRows_win_combi(grid, size)
     #adding column combinations to array
-    arrayAllCombis += gen_arrayColumns_win_combi(grid, size)
+    arrayWinCombis += gen_arrayColumns_win_combi(grid, size)
     #adding diagonal combinations to array
-    arrayAllCombis += gen_arrayDiags_win_combi(grid, size)
+    arrayWinCombis += gen_arrayDiags_win_combi(grid, size)
     
 
-    return arrayAllCombis
+    return arrayWinCombis
+
+def     check_winner(grid:list)-> bool:
+    pass
+    
 
 ##########################################################################
 def     main():
