@@ -32,7 +32,7 @@ def     print_grid(grid: list)-> None:
     if string:
         print(string)
 
-def     create_array_freeCell_indexes(grid: list)-> list:
+def     gen_array_freeCell_indexes(grid: list)-> list:
     arrayFreeCell = []
 
     for index, elem in enumerate(grid):
@@ -41,8 +41,8 @@ def     create_array_freeCell_indexes(grid: list)-> list:
 
     return arrayFreeCell
 
-def     create_array_win_combis(grid: list)-> list:
-    arrayAllCombis = []
+def     gen_array_row_combis(grid: list)-> list:
+    rowArray = []
     combi = []
     i = 0
 
@@ -50,12 +50,22 @@ def     create_array_win_combis(grid: list)-> list:
     for index, elem in enumerate(grid):
         combi.append(index)
         if (i == 2):
-            arrayAllCombis.append(combi)
+            rowArray.append(combi)
             combi = []
             i = 0
         else:
             i += 1
-    #column combinations
+    
+    return rowArray
+
+def     gen_array_win_combis(grid: list)-> list:
+    arrayAllCombis = []
+    combi = []
+    i = 0
+
+    #adding row combinations to array
+    arrayAllCombis = gen_array_row_combis(grid)
+    #adding column combinations to array
     for i in range(3):
         combi = []
         index = i
@@ -88,7 +98,7 @@ def     create_array_win_combis(grid: list)-> list:
 def     main():
     print("prog start...")
     gridGame = create_grid()
-    arrayAllCombis = create_array_win_combis(gridGame)
+    arrayAllCombis = gen_array_win_combis(gridGame)
 
     print(f"arrayAllcombis: {arrayAllCombis}")
 ##########################################################################
