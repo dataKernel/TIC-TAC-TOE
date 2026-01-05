@@ -1,11 +1,11 @@
 import  os
-from    typing import List, Tuple
+from    typing import Tuple
 ##########################################################################
 def     clear_screen():
     os.system("cls" if os.name == "nt" else "clear")
 
-def     create_grid(size: int, exemple: bool = False)-> tuple[list, int]:
-    sizeArrayGrid = size ** 2 - 1
+def     create_grid(size: int, exemple: bool = False)-> Tuple[list, int]:
+    sizeArrayGrid = size ** 2
 
     if (exemple):
         grid = list(range(1, sizeArrayGrid + 1))
@@ -114,6 +114,11 @@ def     gen_array_win_combis(grid: list)-> list:
 def     main():
     print("prog start...")
     gridGame, sizeArraygrid = create_grid(3)
+    gridGameEx, sizeArraygridEx = create_grid(3, True)
+    print("sizeArrayGrid" + str(sizeArraygrid))
+    print(gridGame)
+    print("sizeArrayGridEx" + str(sizeArraygridEx))
+    print(gridGameEx)
     # arrayAllCombis = gen_array_win_combis(gridGame)
 
     # print(f"arrayAllcombis: {arrayAllCombis}")
