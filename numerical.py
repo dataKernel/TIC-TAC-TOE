@@ -41,7 +41,7 @@ def     gen_array_freeCell_indexes(grid: list)-> list:
 
     return arrayFreeCell
 
-def     arrayRows_win_combis(grid: list)-> list:
+def     arrayRows_win_combi(grid: list)-> list:
     rowArray = []
     combi = []
     i = 0
@@ -57,6 +57,10 @@ def     arrayRows_win_combis(grid: list)-> list:
             i += 1
     
     return rowArray
+
+def     arrayColumns_win_combi(grid: list)-> list:
+    #TODO: add func body for column for gen_array_win_combi func
+    pass
 
 def     gen_array_win_combis(grid: list)-> list:
     arrayAllCombis = []
