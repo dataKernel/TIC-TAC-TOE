@@ -44,7 +44,7 @@ def     gen_array_freeCell_indexes(grid:list)-> list:
 
     return arrayFreeCell
 
-def     gen_arrayRows_win_combi(grid:list)-> list:
+def     gen_arrayRows_win_combi(grid:list, size:int)-> list:
     rowArray = []
     combi = []
     i = 0
@@ -52,7 +52,7 @@ def     gen_arrayRows_win_combi(grid:list)-> list:
     #row combinations
     for index, elem in enumerate(grid):
         combi.append(index)
-        if (i == 2):
+        if (i == size - 1):
             rowArray.append(combi)
             combi = []
             i = 0
@@ -60,55 +60,59 @@ def     gen_arrayRows_win_combi(grid:list)-> list:
             i += 1
     return rowArray
 
-def     gen_arrayColumns_win_combi(grid:list, sizeArray:int)-> list:
+def     gen_arrayColumns_win_combi(grid:list, size:int)-> list:
     columnArray = []
     combi = []
     i = 0
     
-    for i in range(3):
+    for i in range(size):
         combi = []
         index = i
         combi.append(i)
-        for j in range(2):
-            index += 3
+        for j in range(size - 1):
+            index += size
             combi.append(index)
         columnArray.append(combi)
     
     return columnArray
 
-def     gen_arrayDiag_win_combi(grid:list)-> list:
+def     gen_arrayDiags_win_combi(grid:list, size:int)-> list:
     diagonalArray = []
     combi = []
     i = 0
-
-
-
-def     gen_array_win_combis(grid:list)-> list:
-    arrayAllCombis = []
-    combi = []
-    i = 0
-
-    #adding row winning combinations to array
-    arrayAllCombis = gen_arrayRows_win_combi(grid)
-    #adding column combinations to array
-    arrayAllCombis += gen_arrayColumns_win_combi(grid)
-    #diagonal combinations
+    
     for i in range(2):
         combi = []
         if (i == 0):
             index = 0
             combi.append(index)
-            for j in range(2):
+            for j in range(size - 1):
                 index += 3 + 1
                 combi.append(index)
-            arrayAllCombis.append(combi)
+            diagonalArray.append(combi)
         else:
-            index = 3 - 1
+            index = size - 1
             combi.append(index)
             for j in range(2):
                 index += 2
                 combi.append(index)
-            arrayAllCombis.append(combi)
+            diagonalArray.append(combi)
+    
+    return diagonalArray
+
+
+def     gen_array_win_combis(grid:list, size:int)-> list:
+    arrayAllCombis = []
+    combi = []
+    i = 0
+
+    #adding row winning combinations to array
+    arrayAllCombis = gen_arrayRows_win_combi(grid, size)
+    #adding column combinations to array
+    arrayAllCombis += gen_arrayColumns_win_combi(grid, size)
+    #adding diagonal combinations to array
+    arrayAllCombis += gen_arrayDiags_win_combi(grid, size)
+    
 
     return arrayAllCombis
 
@@ -120,15 +124,14 @@ def     main():
     #- - - - - - - - - - - -
     gridGame = create_grid(SIZE_GRID)
     gridGameEx = create_grid(SIZE_GRID, True)
+    
     print("sizeArrayGrid" + str(SIZE_GRID ** 2))
     print_grid(gridGame, SIZE_GRID)
     print("sizeArrayGridEx" + str(SIZE_GRID ** 2))
     print_grid(gridGameEx, SIZE_GRID)
-    # arrayAllCombis = gen_array_win_combis(gridGame)
-    arrayFreeindex = gen_array_freeCell_indexes(gridGame)
-    print(arrayFreeindex)
-
-    # print(f"arrayAllcombis: {arrayAllCombis}")
+    
+    arrayAllCombis = gen_array_win_combis(gridGame, SIZE_GRID)
+    print(f"arrayAllcombis: {arrayAllCombis}")
 
 if (__name__ == "__main__"):
     main()
