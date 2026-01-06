@@ -113,44 +113,47 @@ def     gen_array_win_combis(grid:list, size:int)-> list:
 
     return arrayWinCombis
 
-def     check_winner(grid:list, arrayWinCombis:list, size:int)-> Tuple[bool, str]:
+def     check_winner(grid:list, size:int)-> Tuple[bool, str]:
+    arrayWinCombis = gen_array_win_combis(grid, size)
     
     for arrayCombi in arrayWinCombis:
-        count = 0
         if (grid[arrayCombi[0]] == ' '):
             continue
         firstElem = grid[arrayCombi[0]]
         for i in range(1, size):
             if (grid[arrayCombi[i]] != firstElem):
                 break
-            elif (count == size - 2):
+            elif (i == size - 1):
                 return (True, firstElem)
-            count += 1
     return (False, '')
         
-    
+def     game(size:int)-> None:
+    grid = create_grid(size)
+    winner = False
+    round = 0 #numbers of rounds(we start to check combis at 5)
+    while (not winner):
+        userPosition = int(input("PLAY and select a position-->"))
+        grid[userPosition - 1] = 'X'
+        clear_screen()
+        print_grid(grid, size)
+        round += 1
+        if (round == 5):
+            winner, player = check_winner(grid, size)
+        
+        
+        
 
 ##########################################################################
 def     main():
     print("prog start...")
-    #- - - CONSTANTES - - - -
-    SIZE_GRID = 4
+    #- - - CONSTANTS - - - -
+    SIZE_GRID = 3
     #- - - - - - - - - - - -
-    gridGame = create_grid(SIZE_GRID)
-    gridGame[12] = 'X'
-    gridGame[13] = 'X'
-    gridGame[14] = 'X'
-    gridGame[15] = 'X'
+    
     gridGameEx = create_grid(SIZE_GRID, True)
-    
-    print("sizeArrayGrid" + str(SIZE_GRID ** 2))
-    print_grid(gridGame, SIZE_GRID)
-    print("sizeArrayGridEx" + str(SIZE_GRID ** 2))
+    print("sizeArrayGridEx: " + str(SIZE_GRID ** 2))
     print_grid(gridGameEx, SIZE_GRID)
-    
-    arrayWinCombis = gen_array_win_combis(gridGame, SIZE_GRID)
-    print(f"arrayAllcombis: {arrayWinCombis}")
-    win, player = check_winner(gridGame, arrayWinCombis, SIZE_GRID)
-    print(f"win: {win}, player: {player}")
+    game(SIZE_GRID)
+
 if (__name__ == "__main__"):
     main()
