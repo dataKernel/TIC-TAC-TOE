@@ -134,9 +134,16 @@ def     game(size:int)-> None:
     round = 0 #numbers of rounds(we start to check combis at 5)
     while (not winner):
         userPosition = ''
-        while (not userPosition.isdigit()):
-            #gerer la loop avec check de data from user (0 a 8)
-        
+        while (True):
+            userPosition = input("choose position: ")
+            if (not userPosition.isdigit()):
+                continue #we reset the loop (user choice is not a digit)
+            else:
+                userPosition = int(userPosition)
+                if (not 0 <= userPosition <= 8):
+                    continue #we reset the loop (position is out of range)
+                else:
+                    break #we end the loop to treat the new posi
         grid[userPosition - 1] = 'X'
         clear_screen()
         print_grid(grid, size)
