@@ -123,7 +123,7 @@ def     check_winner(grid:list, arrayWinCombis:list, size:int)-> Tuple[bool, str
         for i in range(1, size):
             if (grid[arrayCombi[i]] != firstElem):
                 break
-            elif (count == size - 1):
+            elif (count == size - 2):
                 return (True, firstElem)
             count += 1
     return (False, '')
@@ -134,12 +134,13 @@ def     check_winner(grid:list, arrayWinCombis:list, size:int)-> Tuple[bool, str
 def     main():
     print("prog start...")
     #- - - CONSTANTES - - - -
-    SIZE_GRID = 3
+    SIZE_GRID = 4
     #- - - - - - - - - - - -
     gridGame = create_grid(SIZE_GRID)
-    gridGame[6] = 'X'
-    gridGame[7] = 'X'
-    gridGame[8] = 'X'
+    gridGame[12] = 'X'
+    gridGame[13] = 'X'
+    gridGame[14] = 'X'
+    gridGame[15] = 'X'
     gridGameEx = create_grid(SIZE_GRID, True)
     
     print("sizeArrayGrid" + str(SIZE_GRID ** 2))
