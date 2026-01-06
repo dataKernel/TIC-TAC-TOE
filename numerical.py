@@ -130,25 +130,23 @@ def     check_winner(grid:list, size:int)-> Tuple[bool, str]:
 def     game(size:int)-> None:
     grid = create_grid(size)
     winner = False
-    userPosition = 0
-    
-    
-    
     
     round = 0 #numbers of rounds(we start to check combis at 5)
     while (not winner):
-        #while (userPosition ) terminer la loop qui check les inputs player
-        userPosition = int(input("PLAY and select a position-->"))
+        userPosition = ''
+        while (not userPosition.isdigit()):
+            #gerer la loop avec check de data from user (0 a 8)
+        
         grid[userPosition - 1] = 'X'
         clear_screen()
         print_grid(grid, size)
         round += 1
         print(f"round:{round}")
-        if (round == 5):
+        if (round >= 5):
             winner, player = check_winner(grid, size)        
 
 ##########################################################################
-def     main():
+def     main()-> int:
     print("prog start...")
     #- - - CONSTANTS - - - -
     SIZE_GRID = 3
@@ -157,10 +155,7 @@ def     main():
     gridGameEx = create_grid(SIZE_GRID, True)
     print("sizeArrayGridEx: " + str(SIZE_GRID ** 2))
     print_grid(gridGameEx, SIZE_GRID)
-    #game(SIZE_GRID)
-    check = input("check: ")
-    int(check)
-    if (check.isdigit())        
+    game(SIZE_GRID)
     
 
 if (__name__ == "__main__"):
