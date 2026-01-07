@@ -139,12 +139,13 @@ def     game(size:int)-> None:
             if (not userPosition.isdigit()):
                 continue #we reset the loop (user choice is not a digit)
             else:
-                userPosition = int(userPosition)
-                if (not 0 <= userPosition <= 8):
+                userPosition = int(userPosition) - 1
+                if ((not 0 <= userPosition <= 8) or grid[userPosition] != ' '):
                     continue #we reset the loop (position is out of range)
                 else:
                     break #we end the loop to treat the new posi
-        grid[userPosition - 1] = 'X'
+        
+        grid[userPosition] = 'X'
         clear_screen()
         print_grid(grid, size)
         round += 1
