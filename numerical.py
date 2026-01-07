@@ -1,5 +1,17 @@
-import  os
-from    typing import Tuple
+# 🎨 Codes ANSI utiles
+# Couleur	Code
+# Noir	30
+# Rouge	31
+# Vert	32
+# Jaune	33
+# Bleu	34
+# Magenta	35
+# Cyan	36
+# Blanc	37
+
+import      os
+import      random
+from        typing import Tuple
 ##########################################################################
 
 def     clear_screen():
@@ -33,12 +45,17 @@ def     print_grid(grid:list, size:int)-> None:
             i = 0
             print(string)
             string = ""
-        string += '[' + elem + ']'
+        if elem == 'X':
+            string += '[' + "\033[32m" + elem + "\033[0m" + ']'
+        elif elem == 'O':
+            string += '[' + "\033[31m" + elem + "\033[0m" + ']'
+        else:
+            string += '[' + "\033[32m" + elem + "\033[0m" + ']'
         i += 1
     if string:
         print(string)
 
-def     gen_array_freeCell_indexes(grid:list)-> list:
+def     gen_array_freePosi_indexes(grid:list)-> list:
     arrayFreeCell = []
 
     for index, elem in enumerate(grid):
@@ -123,6 +140,13 @@ def     check_winner(grid:list, size:int)-> Tuple[bool, str]:
             elif (i == size - 1):
                 return (True, firstElem)
     return (False, '')
+
+def     computer_diff_1(grid:list)-> None:
+    arrayFreePosis = gen_array_freePosi_indexes(grid)
+    randomPosi = random.choice(arrayFreePosis)
+    
+    grid[randomPosi] = 'O'
+    
         
 def     game(size:int)-> None:
     grid = create_grid(size)
@@ -131,11 +155,10 @@ def     game(size:int)-> None:
     
     round = 0 #numbers of rounds(we start to check combis at 5)
     while (not winner):
-        print("------------ EXEMPLE GRID POSITIONS ------------")
+        print("------------ \033[32mEXEMPLE GRID POSITIONS\033[0m ------------")
         print_grid(gridGameEx, size)
         print("------------------------------------------------")
         userPosition = ''
-        print(f"check posi free: {gen_array_freeCell_indexes(grid)}")
         while (True):
             userPosition = input("choose position: ")
             if (not userPosition.isdigit()):
@@ -148,21 +171,21 @@ def     game(size:int)-> None:
                     break #we end the loop to treat the new posi
         
         grid[userPosition] = 'X'
+        computer_diff_1(grid)
         clear_screen()
         print_grid(grid, size)
         round += 1
         print(f"round:{round}")
-        if (round >= 5):
+        if (round >= 3):
             winner, player = check_winner(grid, size)        
 
 ##########################################################################
 def     main()-> int:
-    print("prog start...")
+    print("\033[32mprog start\033[0m...")
     #- - - CONSTANTS - - - -
     SIZE_GRID = 3
     #- - - - - - - - - - - -
     game(SIZE_GRID)
-    
 
 if (__name__ == "__main__"):
     main()
