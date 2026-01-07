@@ -24,7 +24,6 @@ def     create_grid(size:int, exemple:bool = False)-> list:
 
     return grid
 
-
 def     print_grid(grid:list, size:int)-> None:
     string = ""
     i = 0
@@ -97,7 +96,6 @@ def     gen_arrayDiags_win_combi(grid:list, size:int)-> list:
     
     return diagonalArray
 
-
 def     gen_array_win_combis(grid:list, size:int)-> list:
     arrayWinCombis = []
     combi = []
@@ -110,8 +108,7 @@ def     gen_array_win_combis(grid:list, size:int)-> list:
     #adding diagonal combinations to array
     arrayWinCombis += gen_arrayDiags_win_combi(grid, size)
     
-
-    return arrayWinCombis
+    return arrayWinCombis       
 
 def     check_winner(grid:list, size:int)-> Tuple[bool, str]:
     arrayWinCombis = gen_array_win_combis(grid, size)
@@ -129,11 +126,16 @@ def     check_winner(grid:list, size:int)-> Tuple[bool, str]:
         
 def     game(size:int)-> None:
     grid = create_grid(size)
+    gridGameEx = create_grid(size, True)
     winner = False
     
     round = 0 #numbers of rounds(we start to check combis at 5)
     while (not winner):
+        print("------------ EXEMPLE GRID POSITIONS ------------")
+        print_grid(gridGameEx, size)
+        print("------------------------------------------------")
         userPosition = ''
+        print(f"check posi free: {gen_array_freeCell_indexes(grid)}")
         while (True):
             userPosition = input("choose position: ")
             if (not userPosition.isdigit()):
@@ -159,10 +161,6 @@ def     main()-> int:
     #- - - CONSTANTS - - - -
     SIZE_GRID = 3
     #- - - - - - - - - - - -
-    
-    gridGameEx = create_grid(SIZE_GRID, True)
-    print("sizeArrayGridEx: " + str(SIZE_GRID ** 2))
-    print_grid(gridGameEx, SIZE_GRID)
     game(SIZE_GRID)
     
 
