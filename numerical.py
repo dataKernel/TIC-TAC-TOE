@@ -151,10 +151,10 @@ def     computer_diff_1(grid:list)-> None:
 def     game(size:int)-> None:
     grid = create_grid(size)
     gridGameEx = create_grid(size, True)
-    winner = False
+    winCheck = False
     
     round = 0 #numbers of rounds(we start to check combis at 5)
-    while (not winner):
+    while (not winCheck):
         print("------------ \033[32mEXEMPLE GRID POSITIONS\033[0m ------------")
         print_grid(gridGameEx, size)
         print("------------------------------------------------")
@@ -177,7 +177,8 @@ def     game(size:int)-> None:
         round += 1
         print(f"round:{round}")
         if (round >= 3):
-            winner, player = check_winner(grid, size)        
+            winCheck, winner = check_winner(grid, size) 
+    print(f"The winner of the game is {winner}")    
 
 ##########################################################################
 def     main()-> int:
