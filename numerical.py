@@ -46,7 +46,7 @@ def     print_grid(grid:list, size:int)-> None:
             print(string)
             string = ""
         if elem == 'X':
-            string += '[' + "\033[32m" + elem + "\033[0m" + ']'
+            string += '[' + "\033[35m" + elem + "\033[0m" + ']'
         elif elem == 'O':
             string += '[' + "\033[31m" + elem + "\033[0m" + ']'
         else:
@@ -127,9 +127,29 @@ def     gen_array_win_combis(grid:list, size:int)-> list:
     
     return arrayWinCombis       
 
+def     choice_user(grid:list)-> int:
+    while (True):
+            userPosition = input("choose position: ")
+            if (not userPosition.isdigit()):
+                continue #we reset the loop (user choice is not a digit)
+            else:
+                userPosition = int(userPosition) - 1
+                if ((not 0 <= userPosition <= 8) or grid[userPosition] != ' '):
+                    continue #we reset the loop (position is out of range)
+                else:
+                    break #we end the loop to treat the new posi
+    
+    return userPosition
+
+def     computer_diff_1(grid:list)-> None:
+    arrayFreePosis = gen_array_freePosi_indexes(grid)
+
+    randomPosi = random.choice(arrayFreePosis)    
+    grid[randomPosi] = 'O'
+    
 def     check_winner(grid:list, size:int)-> Tuple[bool, str]:
     arrayWinCombis = gen_array_win_combis(grid, size)
-    
+
     for arrayCombi in arrayWinCombis:
         if (grid[arrayCombi[0]] == ' '):
             continue
@@ -140,45 +160,33 @@ def     check_winner(grid:list, size:int)-> Tuple[bool, str]:
             elif (i == size - 1):
                 return (True, firstElem)
     return (False, '')
-
-def     computer_diff_1(grid:list)-> None:
-    arrayFreePosis = gen_array_freePosi_indexes(grid)
-    randomPosi = random.choice(arrayFreePosis)
-    
-    grid[randomPosi] = 'O'
-    
-        
+       
 def     game(size:int)-> None:
     grid = create_grid(size)
     gridGameEx = create_grid(size, True)
     winCheck = False
     
-    round = 0 #numbers of rounds(we start to check combis at 5)
+    gameRounds = 0 #numbers of game rounds(we start to check combis at 5)
     while (not winCheck):
         print("------------ \033[32mEXEMPLE GRID POSITIONS\033[0m ------------")
         print_grid(gridGameEx, size)
         print("------------------------------------------------")
-        userPosition = ''
-        while (True):
-            userPosition = input("choose position: ")
-            if (not userPosition.isdigit()):
-                continue #we reset the loop (user choice is not a digit)
-            else:
-                userPosition = int(userPosition) - 1
-                if ((not 0 <= userPosition <= 8) or grid[userPosition] != ' '):
-                    continue #we reset the loop (position is out of range)
-                else:
-                    break #we end the loop to treat the new posi
+        #we ask the user to give a position and we test it
+        userPosition = choice_user(grid)
         
         grid[userPosition] = 'X'
         computer_diff_1(grid)
         clear_screen()
         print_grid(grid, size)
-        round += 1
-        print(f"round:{round}")
-        if (round >= 3):
-            winCheck, winner = check_winner(grid, size) 
-    print(f"The winner of the game is {winner}")    
+        gameRounds += 1
+        print(f"round:{gameRounds}")
+        if (gameRounds >= 5):
+            winCheck, winner = check_winner(grid, size)
+            if winner == 'X': 
+                winner = "\033[35m X \033[0m"
+            elif winner == 'O':
+                winner = "\033[31m X \033[0m"
+            print(f"The \033[32m winner \033[0m is {winner} !")  
 
 ##########################################################################
 def     main()-> int:
