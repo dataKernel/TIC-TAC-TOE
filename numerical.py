@@ -20,7 +20,7 @@ def     clear_screen():
 def     create_grid(size:int, exemple:bool = False)-> list:
     
     if (size < 0 or size > 10):
-        printf("size isnt correct, prog abort..")
+        print("size isnt correct, prog abort..")
         pass
     
     sizeArrayGrid = size ** 2
@@ -180,7 +180,8 @@ def     game(size:int)-> None:
         print_grid(grid, size)
         gameRounds += 1
         print(f"round:{gameRounds}")
-        if (gameRounds >= 5):
+        if (gameRounds >= 3):
+            print("check")
             winCheck, winner = check_winner(grid, size)
             if winner == 'X': 
                 winner = "\033[35m X \033[0m"
