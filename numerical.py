@@ -110,6 +110,8 @@ def     gen_arrayDiags_win_combi(grid:list, size:int)-> list:
             for j in range(size - 1, size * (size - 1) + 1, size - 1):
                 combi.append(j)
             diagonalArray.append(combi)
+            
+    print(f"check diags: {diagonalArray}")
     
     return diagonalArray
 
@@ -125,6 +127,7 @@ def     gen_array_win_combis(grid:list, size:int)-> list:
     #adding diagonal combinations to array
     arrayWinCombis += gen_arrayDiags_win_combi(grid, size)
     
+    print(f"check arrayWinCombis: {arrayWinCombis}")
     return arrayWinCombis       
 
 def     choice_user(grid:list)-> int:
@@ -175,13 +178,13 @@ def     game(size:int)-> None:
         userPosition = choice_user(grid)
         
         grid[userPosition] = 'X'
-        computer_diff_1(grid)
+        if len(gen_array_freePosi_indexes) == 1: 
+            computer_diff_1(grid)
         clear_screen()
         print_grid(grid, size)
         gameRounds += 1
         print(f"round:{gameRounds}")
         if (gameRounds >= 3):
-            print("check")
             winCheck, winner = check_winner(grid, size)
             if winner == 'X': 
                 winner = "\033[35m X \033[0m"
