@@ -21,7 +21,7 @@ def     create_grid(size:int, exemple:bool = False)-> list:
     
     if (size < 0 or size > 10):
         print("size isnt correct, prog abort..")
-        pass
+        return None
     
     sizeArrayGrid = size ** 2
     if (exemple):
@@ -110,8 +110,6 @@ def     gen_arrayDiags_win_combi(grid:list, size:int)-> list:
             for j in range(size - 1, size * (size - 1) + 1, size - 1):
                 combi.append(j)
             diagonalArray.append(combi)
-            
-    print(f"check diags: {diagonalArray}")
     
     return diagonalArray
 
@@ -127,7 +125,6 @@ def     gen_array_win_combis(grid:list, size:int)-> list:
     #adding diagonal combinations to array
     arrayWinCombis += gen_arrayDiags_win_combi(grid, size)
     
-    print(f"check arrayWinCombis: {arrayWinCombis}")
     return arrayWinCombis       
 
 def     choice_user(grid:list)-> int:
@@ -150,8 +147,7 @@ def     computer_diff_1(grid:list)-> None:
     randomPosi = random.choice(arrayFreePosis)    
     grid[randomPosi] = 'O'
     
-def     check_winner(grid:list, size:int)-> Tuple[bool, str]:
-    arrayWinCombis = gen_array_win_combis(grid, size)
+def     check_winner(grid:list, arrayWinCombis:list, size:int)-> Tuple[bool, str]:
 
     for arrayCombi in arrayWinCombis:
         if (grid[arrayCombi[0]] == ' '):
@@ -167,30 +163,31 @@ def     check_winner(grid:list, size:int)-> Tuple[bool, str]:
 def     game(size:int)-> None:
     grid = create_grid(size)
     gridGameEx = create_grid(size, True)
+    arrayWinCombis = gen_array_win_combis(grid, size)
     winCheck = False
     
-    gameRounds = 0 #numbers of game rounds(we start to check combis at 5)
+    gameRounds = 0 #numbers of game rounds(we start to check combis at 3)
     while (not winCheck):
         print("------------ \033[32mEXEMPLE GRID POSITIONS\033[0m ------------")
         print_grid(gridGameEx, size)
         print("------------------------------------------------")
         #we ask the user to give a position and we test it
         userPosition = choice_user(grid)
-        
         grid[userPosition] = 'X'
-        if len(gen_array_freePosi_indexes) == 1: 
-            computer_diff_1(grid)
-        clear_screen()
-        print_grid(grid, size)
-        gameRounds += 1
-        print(f"round:{gameRounds}")
+        #we check if we won the game after the grid update
         if (gameRounds >= 3):
             winCheck, winner = check_winner(grid, size)
             if winner == 'X': 
                 winner = "\033[35m X \033[0m"
             elif winner == 'O':
-                winner = "\033[31m X \033[0m"
-            print(f"The \033[32m winner \033[0m is {winner} !")  
+                winner = "\033[31m O \033[0m"
+            print(f"The \033[32m winner \033[0m is {winner} !")
+        if len(gen_array_freePosi_indexes(grid)) >= 1 and not winCheck:  
+            computer_diff_1(grid)
+        clear_screen()
+        print_grid(grid, size)
+        gameRounds += 1
+        print(f"round:{gameRounds}")  
 
 ##########################################################################
 def     main()-> int:
