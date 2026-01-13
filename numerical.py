@@ -139,6 +139,7 @@ def     choice_user(grid:list)-> int:
                 else:
                     break #we end the loop to treat the new posi
     
+    
     return userPosition
 
 def     computer_diff_1(grid:list)-> None:
