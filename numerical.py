@@ -164,6 +164,7 @@ def     game(size:int)-> None:
     grid = create_grid(size)
     gridGameEx = create_grid(size, True)
     arrayWinCombis = gen_array_win_combis(grid, size)
+    print(f"arrayWinCombis:{arrayWinCombis}")
     winCheck = False
     
     gameRounds = 0 #numbers of game rounds(we start to check combis at 3)
@@ -175,19 +176,18 @@ def     game(size:int)-> None:
         userPosition = choice_user(grid)
         grid[userPosition] = 'X'
         #we check if we won the game after the grid update
+        gameRounds += 1
         if (gameRounds >= 3):
-            winCheck, winner = check_winner(grid, size)
-            if winner == 'X': 
-                winner = "\033[35m X \033[0m"
-            elif winner == 'O':
-                winner = "\033[31m O \033[0m"
-            print(f"The \033[32m winner \033[0m is {winner} !")
+            winCheck, winner = check_winner(grid,arrayWinCombis, size)
         if len(gen_array_freePosi_indexes(grid)) >= 1 and not winCheck:  
             computer_diff_1(grid)
         clear_screen()
         print_grid(grid, size)
-        gameRounds += 1
-        print(f"round:{gameRounds}")  
+    if winner == 'X': 
+        winner = "\033[35m X \033[0m"
+    elif winner == 'O':
+        winner = "\033[31m O \033[0m"
+    print(f"The \033[32m winner \033[0m is {winner} !")
 
 ##########################################################################
 def     main()-> int:
