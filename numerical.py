@@ -171,17 +171,20 @@ def     check_winner(grid:list, arrayWinCombis:list, size:int)-> Tuple[bool, str
     return (False, None)
 
 
-def     play_per_round(grid:list, arrayWinCombis:list, size:int)-> Tupple[bool, str]:
+def     play_per_round(grid:list, arrayWinCombis:list, size:int)-> Tuple[bool, str]:
+    
     #we ask the user to give a position and we test it
-    userPosition = int(input("Choose position: ")) - 1
+    userPosition = choice_user(grid)
+    #clear the sreen for last output
+    clear_screen()
     grid[userPosition] = 'X'
     winCheck, winner = check_winner(grid, arrayWinCombis, size)
-    if (not winCheck):
+    if (not winCheck and gen_array_freePosi_indexes(grid)):
         computer_diff_1(grid)
         winCheck, winner = check_winner(grid, arrayWinCombis, size)
     print_grid(grid, size)
     
-    return winner
+    return (winCheck, winner)
     
 
 def     game(size:int)-> None:
@@ -189,16 +192,20 @@ def     game(size:int)-> None:
     grid = create_grid(size)
     gridGameEx = create_grid(size, True)
     arrayWinCombis = gen_array_win_combis(grid, size)
-    print(f"arrayWinCombis:{arrayWinCombis}")
     winCheck = False
+    winner = None
     gameRounds = 0 #numbers of game rounds to check the draw
     
     while (not winCheck):
         print("------------ \033[32mEXEMPLE GRID POSITIONS\033[0m ------------")
         print_grid(gridGameEx, size)
         print("------------------------------------------------")
-        winner = play_per_round(grid, arrayWinCombis, size)
-        
+        winCheck, winner = play_per_round(grid, arrayWinCombis, size)
+        if (not winCheck  and not gen_array_freePosi_indexes(grid)):
+            print("DRAW!")
+            return
+    
+    #on affiche le gagnant
     if winner == 'X': 
         winner = "\033[35m X \033[0m"
     elif winner == 'O':
