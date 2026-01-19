@@ -14,8 +14,10 @@ import      random
 from        typing import Tuple
 ##########################################################################
 
+
 def     clear_screen():
     os.system("cls" if os.name == "nt" else "clear")
+
 
 def     create_grid(size:int, exemple:bool = False)-> list:
     
@@ -36,6 +38,7 @@ def     create_grid(size:int, exemple:bool = False)-> list:
 
     return grid
 
+
 def     print_grid(grid:list, size:int)-> None:
     string = ""
     i = 0
@@ -55,6 +58,7 @@ def     print_grid(grid:list, size:int)-> None:
     if string:
         print(string)
 
+
 def     gen_array_freePosi_indexes(grid:list)-> list:
     arrayFreeCell = []
 
@@ -63,6 +67,7 @@ def     gen_array_freePosi_indexes(grid:list)-> list:
             arrayFreeCell.append(index)
 
     return arrayFreeCell
+
 
 def     gen_arrayRows_win_combi(grid:list, size:int)-> list:
     rowArray = []
@@ -80,6 +85,7 @@ def     gen_arrayRows_win_combi(grid:list, size:int)-> list:
             i += 1
     return rowArray
 
+
 def     gen_arrayColumns_win_combi(grid:list, size:int)-> list:
     columnArray = []
     combi = []
@@ -95,6 +101,7 @@ def     gen_arrayColumns_win_combi(grid:list, size:int)-> list:
         columnArray.append(combi)
     
     return columnArray
+
 
 def     gen_arrayDiags_win_combi(grid:list, size:int)-> list:
     diagonalArray = []
@@ -113,6 +120,7 @@ def     gen_arrayDiags_win_combi(grid:list, size:int)-> list:
     
     return diagonalArray
 
+
 def     gen_array_win_combis(grid:list, size:int)-> list:
     arrayWinCombis = []
     combi = []
@@ -126,6 +134,7 @@ def     gen_array_win_combis(grid:list, size:int)-> list:
     arrayWinCombis += gen_arrayDiags_win_combi(grid, size)
     
     return arrayWinCombis       
+
 
 def     choice_user(grid:list)-> int:
     while (True):
@@ -141,14 +150,15 @@ def     choice_user(grid:list)-> int:
     
     return userPosition
 
+
 def     computer_diff_1(grid:list)-> None:
     arrayFreePosis = gen_array_freePosi_indexes(grid)
 
     randomPosi = random.choice(arrayFreePosis)    
     grid[randomPosi] = 'O'
     
-def     check_winner(grid:list, arrayWinCombis:list, size:int)-> Tuple[bool, str]:
 
+def     check_winner(grid:list, arrayWinCombis:list, size:int)-> Tuple[bool, str]:
     for arrayCombi in arrayWinCombis:
         if (grid[arrayCombi[0]] == ' '):
             continue
@@ -160,30 +170,41 @@ def     check_winner(grid:list, arrayWinCombis:list, size:int)-> Tuple[bool, str
                 return (True, firstElem)
     return (False, None)
 
-def     play_per_round(grid:list, arrayWinCombis:list, size:int)-> None:
-    #we ask the user to give a position and we test it
-    userPosition = choice_user(grid)
-    grid[userPosition] = 'X'
-    checkWin, winner = check_winner(grid, arrayWinCombis, size)
 
-       
+def     play_per_round(grid:list, arrayWinCombis:list, size:int)-> Tupple[bool, str]:
+    #we ask the user to give a position and we test it
+    userPosition = int(input("Choose position: ")) - 1
+    grid[userPosition] = 'X'
+    winCheck, winner = check_winner(grid, arrayWinCombis, size)
+    if (not winCheck):
+        computer_diff_1(grid)
+        winCheck, winner = check_winner(grid, arrayWinCombis, size)
+    print_grid(grid, size)
+    
+    return winner
+    
+
 def     game(size:int)-> None:
+    #evident affectation for the game init(grid, grid exemple, array to get winning combinations, and the win condition to check if we get a winner)
     grid = create_grid(size)
     gridGameEx = create_grid(size, True)
     arrayWinCombis = gen_array_win_combis(grid, size)
     print(f"arrayWinCombis:{arrayWinCombis}")
     winCheck = False
+    gameRounds = 0 #numbers of game rounds to check the draw
     
-    gameRounds = 0 #numbers of game rounds(we start to check combis at 3)
     while (not winCheck):
         print("------------ \033[32mEXEMPLE GRID POSITIONS\033[0m ------------")
         print_grid(gridGameEx, size)
         print("------------------------------------------------")
+        winner = play_per_round(grid, arrayWinCombis, size)
+        
     if winner == 'X': 
         winner = "\033[35m X \033[0m"
     elif winner == 'O':
         winner = "\033[31m O \033[0m"
     print(f"The \033[32m winner \033[0m is {winner} !")
+
 
 ##########################################################################
 def     main()-> int:
