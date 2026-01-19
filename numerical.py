@@ -158,7 +158,14 @@ def     check_winner(grid:list, arrayWinCombis:list, size:int)-> Tuple[bool, str
                 break
             elif (i == size - 1):
                 return (True, firstElem)
-    return (False, '')
+    return (False, None)
+
+def     play_per_round(grid:list, arrayWinCombis:list, size:int)-> None:
+    #we ask the user to give a position and we test it
+    userPosition = choice_user(grid)
+    grid[userPosition] = 'X'
+    checkWin, winner = check_winner(grid, arrayWinCombis, size)
+
        
 def     game(size:int)-> None:
     grid = create_grid(size)
@@ -172,17 +179,6 @@ def     game(size:int)-> None:
         print("------------ \033[32mEXEMPLE GRID POSITIONS\033[0m ------------")
         print_grid(gridGameEx, size)
         print("------------------------------------------------")
-        #we ask the user to give a position and we test it
-        userPosition = choice_user(grid)
-        grid[userPosition] = 'X'
-        #we check if we won the game after the grid update
-        gameRounds += 1
-        if (gameRounds >= 3):
-            winCheck, winner = check_winner(grid,arrayWinCombis, size)
-        if len(gen_array_freePosi_indexes(grid)) >= 1 and not winCheck:  
-            computer_diff_1(grid)
-        clear_screen()
-        print_grid(grid, size)
     if winner == 'X': 
         winner = "\033[35m X \033[0m"
     elif winner == 'O':
